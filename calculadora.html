@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400i,700,800i&display=swap">
+
+    <title>Calculadora de Idade</title>
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: hsl(0, 0%, 94%);
+        }
+        
+        h1 {
+            color: hsl(0, 0%, 8%);
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: hsl(0, 1%, 44%);
+            font-weight: 800;
+            font-size: 24px;
+        }
+        
+        input[type="date"] {
+            padding: 10px;
+            font-size: 32px;
+            border: 1px solid hsl(0, 0%, 86%);
+            background-color: hsl(0, 0%, 100%);
+            color: hsl(0, 0%, 8%);
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 24px;
+            background-color: hsl(259, 100%, 65%);
+            color: hsl(0, 0%, 100%);
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            background-color: hsl(259, 100%, 55%);
+        }
+        
+        #resultado {
+            margin-top: 20px;
+            font-size: 24px;
+            color: hsl(0, 1%, 44%);
+            font-weight: 800;
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400i,700,800i&display=swap">
+    <script>
+        function calcularIdade() {
+            var dataNascimento = document.getElementById("dataNascimento").value;
+            var partesData = dataNascimento.split('-');
+            var data = new Date(partesData[0], partesData[1] - 1, partesData[2]);
+            var hoje = new Date();
+            
+            var anos = hoje.getFullYear() - data.getFullYear();
+            var meses = hoje.getMonth() - data.getMonth();
+            var dias = hoje.getDate() - data.getDate();
+            
+            if (meses < 0 || (meses === 0 && dias < 0)) {
+                anos--;
+                meses = 12 - Math.abs(meses);
+            }
+            
+            if (dias < 0) {
+                var ultimoDiaMesAnterior = new Date(hoje.getFullYear(), hoje.getMonth(), 0).getDate();
+                dias = ultimoDiaMesAnterior - Math.abs(dias);
+                meses--;
+            }
+            
+            document.getElementById("resultado").innerHTML = "Sua idade é: " + anos + " anos, " + meses + " meses e " + dias + " dias";
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculadora de Idade</h1>
+    <label for="dataNascimento">Data de Nascimento:</label>
+    <input type="date" id="dataNascimento">
+    <br>
+    <button onclick="calcularIdade()">Calcular</button>
+    <p id="resultado"></p>
+</body>
+</html>
